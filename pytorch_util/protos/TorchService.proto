@@ -1,0 +1,34 @@
+syntax = "proto3";
+//数据计算服务命名
+package PyTorchService;
+
+service TorchService {
+    rpc extract_batch(ExtractBatchRequest) returns (ExtractBatchResponse) {
+    }//批量抽取功能
+    rpc extract_single(ExtractSingleRequest) returns (ExtractSingleClassificationResponse) {
+    }//单条抽取功能
+}
+
+// 单条抽取Request
+message ExtractSingleRequest
+{
+    bytes bytes_x = 1;
+}
+
+// 单条抽取分类整数型Response
+message ExtractSingleClassificationResponse
+{
+    int32 y = 1;
+}
+
+// 批量抽取Request
+message ExtractBatchRequest
+{
+    bytes bytes_list_x = 1;
+}
+
+// 批量抽取Response
+message ExtractBatchResponse
+{
+    bytes bytes_list_y = 1;
+}

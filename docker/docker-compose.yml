@@ -1,0 +1,46 @@
+version: '2.2'
+services:
+  pytorch_util_service_1:
+    image: pytorch_util_service:22.06.14.1628
+    environment:
+      RPC_SERVER_PORT: 42000
+      DOLPHIN_NLP_SERVICE_LOG_LEVEL: INFO
+    volumes:
+      - /data/wxt/pytorch_util/pytorch_util/log:/pytorch_util_service/pytorch_util_service/log
+    ports:
+      - 42001:42000
+    restart: always
+    mem_limit: 3G
+    command:
+#      --gpus=all
+      --runtime=nvidia
+      python server.py
+#
+#  pytorch_util_service_2:
+#    image: pytorch_util_service:22.06.14.1628
+#    environment:
+#      RPC_SERVER_PORT: 42000
+#      DOLPHIN_NLP_SERVICE_LOG_LEVEL: INFO
+#    volumes:
+#      - /data/wxt/pytorch_util/pytorch_util/log:/pytorch_util_service/pytorch_util_service/log
+#    ports:
+#      - 42002:42000
+#    restart: always
+#    mem_limit: 3G
+#    command:
+#      --gpus=all
+#      python server.py
+#
+#  pytorch_util_service_nginx:
+#    restart: always
+#    image: nginx
+#    ports:
+#      - 42000:42000
+#    volumes:
+#      - ./log:/var/log/nginx
+#      - ./nginx_rule.conf:/etc/nginx/nginx.conf
+#    logging:
+#      driver: json-file
+#      options:
+#        max-size: 100m
+#        max-file: '10'
