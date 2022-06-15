@@ -35,7 +35,8 @@ class RequestRpc(TSRPC.TorchService):
         :param context:
         :return: 心跳检测状态
         """
-        logger.info("run ping function")
+        logger.info("running ping")
+        logger.info("finished ping")
         return TS.PingResponse(state='ok')
 
     def extract_batch(self, request, context):
@@ -49,12 +50,17 @@ class RequestRpc(TSRPC.TorchService):
         :param context:
         :return:
         """
+        logger.info("running extract_batch")
+
         # get input list<list>
         bytes_list_x = request.bytes_list_x
         list_x = msg_unpackb(bytes_list_x)
         list_y = model.predict(X=list_x).tolist()
         # pack to bytes & build response
         _response = TS.ExtractBatchResponse(bytes_list_y=msg_packb(list_y))
+
+        logger.info("finished extract_batch")
+
         return _response
 
     def extract_single(self, request, context):
@@ -68,6 +74,7 @@ class RequestRpc(TSRPC.TorchService):
         :param context:
         :return:
         """
+        logger.info("running extract_single")
 
         bytes_x = request.bytes_x
         x = msg_unpackb(bytes_x)
@@ -76,6 +83,9 @@ class RequestRpc(TSRPC.TorchService):
         y = list_y[0]
         # pack to bytes & build response
         _response = TS.ExtractSingleClassificationResponse(y=y)
+
+        logger.info("finished extract_single")
+
         return _response
 
 
