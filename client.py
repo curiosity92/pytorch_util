@@ -23,7 +23,7 @@ def run_batch_client(list_x: list):
         stub = TSRPC.TorchServiceStub(channel)
 
         # def ping():
-        #     r = DNLPS.PingRequest(check='Are you OK?')
+        #     r = TS.PingRequest(check='Are you OK?')
         #     response = stub.ping(r)
         #     if response.state == 'ok':
         #         return 'service is OK'
