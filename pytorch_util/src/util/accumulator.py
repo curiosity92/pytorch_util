@@ -3,7 +3,7 @@
 
 
 class Accumulator:
-    """在n个变量上累加"""
+    """accumulate sums over n variables"""
     def __init__(self, n):
         self.data = [0.0] * n
 
