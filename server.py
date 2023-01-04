@@ -7,9 +7,9 @@ from concurrent import futures
 import grpc
 # from pytorch_util.conf.sentry_conf import SENTRY_DSN
 # from pytorch_util.src.util.sentry_sdk_handler import SentryHandler
-from pytorch_util.conf.mlp_model_conf import LIST_N_FEATURES_PER_LAYER, LIST_PROB_DROPOUT, ACTIVATION_FUNCTION_HIDDEN, \
-    MODEL_FILE_PATH
-from pytorch_util.src.util.mlp_model import MLPModel
+from pytorch_util.conf.base_model_conf import MODEL_FILE_PATH
+from pytorch_util.conf.mlp_model_conf import LIST_N_FEATURES_PER_LAYER, LIST_PROB_DROPOUT, ACTIVATION_FUNCTION_HIDDEN
+from pytorch_util.src.util.mlp_model_agent import MLPModelAgent
 from pytorch_util.src.util.serialization import msg_unpackb, msg_packb
 from pytorch_util.src.util.io_util.logging_instance import logger
 from pytorch_util.conf.server_conf import RPC_SERVER_PORT
@@ -17,9 +17,9 @@ import pytorch_util.pb.TorchService_pb2_grpc as TSRPC
 import pytorch_util.pb.TorchService_pb2 as TS
 
 # build model
-model = MLPModel(list_n_features_per_layer=LIST_N_FEATURES_PER_LAYER,
-                 list_prob_dropout=LIST_PROB_DROPOUT,
-                 activation_function=ACTIVATION_FUNCTION_HIDDEN)
+model = MLPModelAgent(list_n_features_per_layer=LIST_N_FEATURES_PER_LAYER,
+                      list_prob_dropout=LIST_PROB_DROPOUT,
+                      activation_function=ACTIVATION_FUNCTION_HIDDEN)
 
 # load model
 model.load_state_dict(file_path=MODEL_FILE_PATH)
@@ -43,9 +43,9 @@ class RequestRpc(TSRPC.TorchService):
         """
         批量提取模型结果。
         输入样例:
-            [[0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1], [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1]]
+            [[0, 1, 1, 1, 1, 1, 0, 1, 0, 1, 1, 0, 1], [0, 1, 1, 1, 0, 0, 1, 0, 0, 1, 1, 0, 1], [0, 1, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]]
         输出样例:
-            [1，1]
+            [1，1, 0]
         :param request:
         :param context:
         :return:
