@@ -5,7 +5,6 @@
 import json
 import os
 import torch
-from pkg_resources import resource_filename
 
 from pytorch_util.conf.activation_name_conf import ACTIVATION_NAME_RELU, SET_ACTIVATION_NAME
 from pytorch_util.src.util.io_util.logging_instance import logger
@@ -34,13 +33,3 @@ ACTIVATION_FUNCTION_HIDDEN = os.getenv('ACTIVATION_FUNCTION_HIDDEN',
                                        ACTIVATION_NAME_RELU)
 assert ACTIVATION_FUNCTION_HIDDEN in SET_ACTIVATION_NAME
 logger.info('ACTIVATION_FUNCTION_HIDDEN: %s' % ACTIVATION_FUNCTION_HIDDEN)
-
-# gpu acceleration
-IS_USING_CUDA = torch.cuda.is_available()
-logger.info("IS_USING_CUDA: %s" % IS_USING_CUDA)
-
-# model file path
-MODEL_DIR = os.path.join(os.path.dirname(resource_filename(__name__, '')), 'data', 'model')
-MODEL_FILE_NAME = os.getenv('MODEL_FILE_NAME', 'mlp_model.state_dict')
-MODEL_FILE_PATH = os.path.join(MODEL_DIR, MODEL_FILE_NAME)
-logger.info('MODEL_FILE_PATH: %s' % MODEL_FILE_PATH)
