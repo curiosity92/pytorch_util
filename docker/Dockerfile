@@ -1,6 +1,7 @@
 FROM pytorch/pytorch:1.11.0-cuda11.3-cudnn8-runtime
 
 # S config timezone
+RUN apt-get install tzdata
 RUN ln -sf /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 # E config timezone
 
